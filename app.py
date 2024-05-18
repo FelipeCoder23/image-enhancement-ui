@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from PIL import Image
 import io
-import os
+import base64
 
 st.title("Image Enhancement App")
 
@@ -14,17 +14,17 @@ if uploaded_file is not None:
 
     # Enviar la imagen al backend para mejorarla
     files = {"file": uploaded_file.getvalue()}
-    response = requests.post("http://localhost:8000/enhance-image/", files=files)
+    response = requests.post("http://fastapi-container:8000/enhance-image/", files=files)
 
     if response.status_code == 200:
-        st.success('Image successfully enhanced and saved locally!')
+        st.success('Image successfully enhanced and returned!')
 
-        # Obtener la imagen mejorada
-        enhanced_image_path = response.json().get("filename")
+        # Obtener la imagen mejorada codificada en base64
+        encoded_image = response.json().get("image")
 
-        # Asegurarse de que la ruta es correcta
-        if enhanced_image_path and os.path.exists(enhanced_image_path):
-            enhanced_image = Image.open(enhanced_image_path)
+        if encoded_image:
+            # Decodificar la imagen base64
+            enhanced_image = Image.open(io.BytesIO(base64.b64decode(encoded_image)))
             # Mostrar la imagen mejorada
             st.image(enhanced_image, caption='Enhanced Image', use_column_width=True)
         else:
