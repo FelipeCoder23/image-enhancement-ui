@@ -1,0 +1,16 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "streamlit-container",
+      "image": "tu-usuario-docker/streamlit-image-enhancement:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8501,
+          "hostPort": 8501
+        }
+      ]
+    }
+  ]
+}
