@@ -14,7 +14,7 @@ if uploaded_file is not None:
 
     # Enviar la imagen al backend para mejorarla
     files = {"file": uploaded_file.getvalue()}
-    response = requests.post("http://fastapi-container:8000/enhance-image/", files=files)
+    response = requests.post("http://3.93.163.184:8000/enhance-image/", files=files)  # Cambia aquí la URL
 
     if response.status_code == 200:
         st.success('Image successfully enhanced and returned!')
