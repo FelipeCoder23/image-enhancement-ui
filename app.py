@@ -9,13 +9,14 @@ st.title("Image Enhancement App")
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
 
 if uploaded_file is not None:
+    st.info("Image uploaded, starting enhancement process")
     # Mostrar la imagen subida
     st.image(uploaded_file, caption='Uploaded Image', use_column_width=True)
 
     # Enviar la imagen al backend para mejorarla
     files = {"file": uploaded_file.getvalue()}
     try:
-        response = requests.post("http://3.83.236.0:8000/enhance-image/", files=files, timeout=120)  # Cambia aquí la URL y añade timeout
+        response = requests.post("http://3.83.236.0:8000/enhance-image/", files=files, timeout=600)  # Cambia aquí la URL y añade timeout
         if response.status_code == 200:
             st.success('Image successfully enhanced and returned!')
 
@@ -23,6 +24,7 @@ if uploaded_file is not None:
             encoded_image = response.json().get("image")
 
             if encoded_image:
+                st.info("Image enhancement successful, displaying image")
                 # Decodificar la imagen base64
                 enhanced_image = Image.open(io.BytesIO(base64.b64decode(encoded_image)))
                 # Mostrar la imagen mejorada
