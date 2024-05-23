@@ -15,7 +15,7 @@ if uploaded_file is not None:
     # Enviar la imagen al backend para mejorarla
     files = {"file": uploaded_file.getvalue()}
     try:
-        response = requests.post("http://54.174.133.66:8000/enhance-image/", files=files, timeout=1500)  # Cambia aquí la URL y añade timeout
+        response = requests.post("http://54.196.142.246:8000/enhance-image/", files=files, timeout=1500)  # Cambia aquí la URL y añade timeout
         if response.status_code == 200:
             st.success('Image successfully enhanced and returned!')
 
